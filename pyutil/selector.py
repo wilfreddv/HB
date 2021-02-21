@@ -67,11 +67,12 @@ def selector(prompt, choices):
 
             
             if char in terminal.TERMINATOR:
-                terminal.move_cursor(lines_written, terminal.C_UP)
-                for _ in range(lines_written): terminal.write("", True, True, True)
-                terminal.move_cursor(lines_written, terminal.C_UP)
-                terminal.write(valid_choices[selected], True, True, True)
-                break
+                if len(valid_choices) > 0:
+                    terminal.move_cursor(lines_written, terminal.C_UP)
+                    for _ in range(lines_written): terminal.write("", True, True, True)
+                    terminal.move_cursor(lines_written, terminal.C_UP)
+                    terminal.write(valid_choices[selected], True, True, True)
+                    break
             elif char in terminal.BACKSPACE:
                 if len(buffer) > 1:
                     buffer = buffer[:-1]
