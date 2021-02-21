@@ -1,9 +1,21 @@
 from . import grep
+from pyutil.termctl import Terminal
+
 
 def selector(prompt, choices):
-    from pyutil.termctl import Terminal
+    """
+    Allows the user to choose from a list of options
 
+    prompt -> str
+    choices -> [str]
 
+    Returns a string which contains the choice, and
+    corresponds to an entry in `choices`.
+    
+    Ctrl+C (KeyboardInterrupt) kills the function
+    Returns `None`
+    """
+    
     terminal = Terminal()
     terminal.set_raw()
     terminal.hide_cursor()
@@ -14,7 +26,10 @@ def selector(prompt, choices):
         while True:
             lines_written = 0
 
-            terminal.write(prompt + " " + buffer, True, True)
+            if len(buffer):
+                terminal.write(prompt + " " + buffer, True, True)
+            else:
+                terminal.write(prompt + " (Start typing to search)", True, True)
 
             terminal.write("\n")
             lines_written += 1
