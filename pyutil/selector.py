@@ -9,8 +9,7 @@ def selector(prompt, choices):
     terminal.hide_cursor()
 
     buffer = ""
-    lines_written = 0
-    selected = 0
+    scroll = lines_written = selected = 0
     try:
         while True:
             lines_written = 0
@@ -20,8 +19,9 @@ def selector(prompt, choices):
             terminal.write("\n")
             lines_written += 1
             valid_choices = choices | grep(buffer, i=True)
-
-            selected = int(len(valid_choices)/2) if len(valid_choices)<5 else 2
+            
+            # Scrolling through the list
+            valid_choices = valid_choices[scroll:] + valid_choices[:scroll]
 
             """
             Something with index of selected, that as pivot point
@@ -29,6 +29,8 @@ def selector(prompt, choices):
             shift index aka pivot (selected -= 1 and then index of previous - 1 or something)
             """
 
+            selected = int(len(valid_choices)/2) if len(valid_choices)<5 else 2
+            
             for choice in valid_choices:
                 if lines_written >= 6:
                     break
@@ -42,9 +44,9 @@ def selector(prompt, choices):
 
             char = terminal.read(1)
             if char == terminal.K_UP:
-                selected -= 1
+                scroll -= 1
             if char == terminal.K_DOWN:
-                selected += 1
+                scroll += 1
             
             if char in terminal.TERMINATOR:
                 terminal.move_cursor(lines_written, terminal.C_UP)

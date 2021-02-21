@@ -1,6 +1,5 @@
 import sys
 import termios, atexit, tty
-from pyutil import getch
 
 
 class Terminal:
@@ -37,11 +36,11 @@ class Terminal:
 
     
     def read(self, n=1):        
-        c = getch(1)
+        c = self.getch(1)
         if c == Terminal.ESC:
-            return c + getch(2)
+            return c + self.getch(2)
         else:
-            c += getch(n-1)
+            c += self.getch(n-1)
         
         return c
 
@@ -71,6 +70,10 @@ class Terminal:
     def restore_cursor(self):
         self.write(f"{self.ESC}[u")
 
+    @staticmethod
+    def getch(n=1):
+        import sys
+        return sys.stdin.read(n) if n else ""
 
     def reset(self):
         self.show_cursor()
