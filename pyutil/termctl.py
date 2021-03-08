@@ -21,6 +21,7 @@ class Terminal:
     C_RIGHT = f"{SCI}{{}}C"
     C_LEFT  = f"{SCI}{{}}D"
 
+
     def __init__(self):
         self.old_termios = termios.tcgetattr(self._STDIN)
         self.termios = self.old_termios.copy()

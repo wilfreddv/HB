@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from pyutil import grep
 from pyutil.termctl import Terminal
 
@@ -102,9 +104,10 @@ def selector(prompt, choices):
 if __name__ == '__main__':
     import sys
 
-    prompt = ""
-    if len(sys.argv) == 2:
-        prompt = sys.argv[1]
+    if len(sys.argv) < 3:
+        print("Not enough arguments")
+        exit(1)
+    prompt = sys.argv[1]
+    options = sys.argv[2:]
 
-    options = [line.rstrip() for line in sys.stdin.readlines()]
     print(selector(prompt, options))
