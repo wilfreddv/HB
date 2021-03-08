@@ -2,6 +2,7 @@
 
 from pyutil import grep
 from pyutil.termctl import Terminal
+from sys import stderr as STDERR
 
 
 def selector(prompt, choices):
@@ -18,7 +19,7 @@ def selector(prompt, choices):
     Returns `None`
     """
     
-    terminal = Terminal()
+    terminal = Terminal(of=STDERR)
     terminal.set_raw()
     terminal.hide_cursor()
 

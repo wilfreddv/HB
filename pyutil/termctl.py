@@ -22,10 +22,11 @@ class Terminal:
     C_LEFT  = f"{SCI}{{}}D"
 
 
-    def __init__(self):
+    def __init__(self, of=sys.stdout):
         self.old_termios = termios.tcgetattr(self._STDIN)
         self.termios = self.old_termios.copy()
-        
+        self.of = of 
+
         atexit.register(self.reset)
 
 
@@ -50,8 +51,8 @@ class Terminal:
         if line_feed:  data = "\r" + data
         if clear_line: data = data + f"{self.SCI}K"
         if newline: data += "\n"
-        sys.stdout.write(data)
-        sys.stdout.flush()
+        self.of.write(data)
+        self.of.flush()
 
     
     def show_cursor(self):
