@@ -101,7 +101,7 @@ def selector(prompt, choices):
     return valid_choices[selected]
 
 
-if __name__ == '__main__':
+def main():
     import sys
 
     if len(sys.argv) < 3:
@@ -111,3 +111,7 @@ if __name__ == '__main__':
     options = sys.argv[2:]
 
     print(selector(prompt, options))
+
+
+if __name__ == '__main__':
+    main()
