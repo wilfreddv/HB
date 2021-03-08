@@ -1,4 +1,4 @@
-from . import grep
+from pyutil import grep
 from pyutil.termctl import Terminal
 
 
@@ -97,3 +97,14 @@ def selector(prompt, choices):
         terminal.reset()
 
     return valid_choices[selected]
+
+
+if __name__ == '__main__':
+    import sys
+
+    prompt = ""
+    if len(sys.argv) == 2:
+        prompt = sys.argv[1]
+
+    options = [line.rstrip() for line in sys.stdin.readlines()]
+    print(selector(prompt, options))
