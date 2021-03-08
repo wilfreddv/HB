@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from pyutil import grep
-from pyutil.termctl import Terminal
+from pyutil.termctl import Terminal, CTLSEQ
 from sys import stderr as STDERR
 
 
@@ -63,20 +63,20 @@ def selector(prompt, choices):
 
 
             char = terminal.read(1)
-            if char == terminal.K_UP:
+            if char == CTLSEQ.K_UP:
                 scroll -= 1
-            if char == terminal.K_DOWN:
+            if char == CTLSEQ.K_DOWN:
                 scroll += 1
 
             
-            if char in terminal.TERMINATOR:
+            if char in CTLSEQ.TERMINATOR:
                 if len(valid_choices) > 0:
-                    terminal.move_cursor(lines_written, terminal.C_UP)
+                    terminal.move_cursor(lines_written, CTLSEQ.C_UP)
                     for _ in range(lines_written): terminal.write("", True, True, True)
-                    terminal.move_cursor(lines_written, terminal.C_UP)
+                    terminal.move_cursor(lines_written, CTLSEQ.C_UP)
                     terminal.write(valid_choices[selected], True, True, True)
                     break
-            elif char in terminal.BACKSPACE:
+            elif char in CTLSEQ.BACKSPACE:
                 if len(buffer) > 1:
                     buffer = buffer[:-1]
                 else:
@@ -85,14 +85,14 @@ def selector(prompt, choices):
                 buffer += char
             
             
-            terminal.move_cursor(lines_written, terminal.C_UP)
+            terminal.move_cursor(lines_written, CTLSEQ.C_UP)
             for _ in range(lines_written): terminal.write("", True, True, True)
-            terminal.move_cursor(lines_written, terminal.C_UP)
+            terminal.move_cursor(lines_written, CTLSEQ.C_UP)
 
     except KeyboardInterrupt:
-        terminal.move_cursor(lines_written, terminal.C_UP)
+        terminal.move_cursor(lines_written, CTLSEQ.C_UP)
         for _ in range(lines_written): terminal.write("", True, True, True)
-        terminal.move_cursor(lines_written, terminal.C_UP)
+        terminal.move_cursor(lines_written, CTLSEQ.C_UP)
 
         return None
 

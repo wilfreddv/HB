@@ -2,11 +2,11 @@ import sys
 import termios, atexit, tty
 
 
-class Terminal:
+class CTLSEQ:
     """
-    Wrapper for some terminal interactions
+    Define common ANSI escape
+    code control sequences
     """
-    _STDIN = sys.stdin.fileno()
     ESC = '\x1b'
     SCI = f'{ESC}['
     K_UP = f"{SCI}A"
@@ -20,6 +20,17 @@ class Terminal:
     C_DOWN  = f"{SCI}{{}}B"
     C_RIGHT = f"{SCI}{{}}C"
     C_LEFT  = f"{SCI}{{}}D"
+
+
+class COLORS:
+    pass
+
+
+class Terminal:
+    """
+    Wrapper for some terminal interactions
+    """
+    _STDIN = sys.stdin.fileno()
 
 
     def __init__(self, of=sys.stdout):
@@ -39,7 +50,7 @@ class Terminal:
     
     def read(self, n=1):        
         c = self.getch(1)
-        if c == Terminal.ESC:
+        if c == CTLSEQ.ESC:
             return c + self.getch(2)
         else:
             c += self.getch(n-1)
@@ -49,28 +60,28 @@ class Terminal:
 
     def write(self, data, clear_line=0, line_feed=0, newline=0):
         if line_feed:  data = "\r" + data
-        if clear_line: data = data + f"{self.SCI}K"
+        if clear_line: data = data + f"{CTLSEQ.SCI}K"
         if newline: data += "\n"
         self.of.write(data)
         self.of.flush()
 
     
     def show_cursor(self):
-        self.write(f"{self.SCI}?25h")
+        self.write(f"{CTLSEQ.SCI}?25h")
 
     def hide_cursor(self):
-        self.write(f"{self.SCI}?25l")
+        self.write(f"{CTLSEQ.SCI}?25l")
 
     def move_cursor(self, distance, direction):
         self.write(direction.format(distance))
 
 
     def save_cursor(self):
-        self.write(f"{self.ESC}[s")
+        self.write(f"{CTLSEQ.ESC}[s")
 
     
     def restore_cursor(self):
-        self.write(f"{self.ESC}[u")
+        self.write(f"{CTLSEQ.ESC}[u")
 
     @staticmethod
     def getch(n=1):
