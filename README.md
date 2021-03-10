@@ -4,5 +4,5 @@
 ```
 $ https://github.com/wilfred-kun/HB.git
 $ cd HB
-$ python3 -m pip install .
+$ make install
 ```
