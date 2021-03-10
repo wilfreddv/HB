@@ -8,22 +8,81 @@ class CTLSEQ:
     code control sequences
     """
     ESC = '\x1b'
-    SCI = f'{ESC}['
-    K_UP = f"{SCI}A"
-    K_DOWN = f"{SCI}B"
-    K_RIGHT = f"{SCI}C"
-    K_LEFT = f"{SCI}D"
-    BACKSPACE = (chr(0x08), chr(0x7F))
-    TERMINATOR = ('\n', '\x04')
+    SCI     = ESC + '['
+    K_UP    = SCI + 'A'
+    K_DOWN  = SCI + 'B'
+    K_RIGHT = SCI + 'C'
+    K_LEFT  = SCI + 'D'
+    BACKSPACE   = (chr(0x08), chr(0x7F))
+    TERMINATOR  = ('\n', '\x04')
 
-    C_UP    = f"{SCI}{{}}A"
-    C_DOWN  = f"{SCI}{{}}B"
-    C_RIGHT = f"{SCI}{{}}C"
-    C_LEFT  = f"{SCI}{{}}D"
+    C_UP    = SCI + "{}A"
+    C_DOWN  = SCI + "{}B"
+    C_RIGHT = SCI + "{}C"
+    C_LEFT  = SCI + "{}D"
 
 
-class COLORS:
-    pass
+class _metacolors(type):
+    def __init__(cls, *args, **kwargs):
+        for name in dir(cls):
+            if not name.startswith('_'):
+                value = getattr(cls, name)
+                setattr(cls, name, f"{CTLSEQ.SCI}{value}m")
+
+
+class COLORS(metaclass=_metacolors):
+    # Foreground
+    BLACK       = 30
+    RED         = 31
+    GREEN       = 32
+    YELLOW      = 33
+    BLUE        = 34
+    MAGENTA     = 35
+    CYAN        = 36
+    WHITE       = 37
+    DEFAULT     = 38
+
+    
+    BBLACK      = 90
+    BRED        = 91
+    BGREEN      = 92
+    BYELLOW     = 93
+    BBLUE       = 94
+    BMAGENTA    = 95
+    BCYAN       = 96
+    BWHITE      = 97
+
+    # Background
+    BLACKBG     = 40
+    REDBG       = 41
+    GREENBG     = 42
+    YELLOWBG    = 43
+    BLUEBG      = 44
+    MAGENTABG   = 45
+    CYANBG      = 46
+    WHITEBG     = 47
+    RESETBG     = 49
+
+    BBLACKBG    = 100
+    BREDBG      = 101
+    BGREENBG    = 102
+    BYELLOWBG   = 103
+    BBLUEBG     = 104
+    BMAGENTABG  = 105
+    BCYANBG     = 106
+    BWHITEBG    = 107
+
+    # Other
+    END         = 0
+    BOLD        = 1
+    DIM         = 2
+    ITALIC      = 3
+    UNDERLINE   = 4
+    BLINK       = 5
+    BLINKFAST   = 6
+    INVERT      = 7
+    HIDDEN      = 8
+    STRIKE      = 9
 
 
 class Terminal:
