@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 import os
 
 HERE = os.path.abspath(os.path.dirname(__file__))
@@ -7,7 +7,7 @@ VERSION = '0.1'
 URL = 'https://github.com/wilfred-kun/HB'
 
 
-with open('README') as f:
+with open('README.md') as f:
     README = f.read()
 
 
@@ -18,6 +18,7 @@ setup(name=PACKAGE_NAME,
       long_description=README,
       long_description_content_type="text/markdown",
       author='wilfred-kun',
+      packages=find_packages(exclude=[]),
       python_requires='>=3.6',
       entry_points={'console_scripts':
             [
