@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from pyutil import grep
-from pyutil.termctl import Terminal, CTLSEQ
+from pyutil.termctl import Terminal, CTLSEQ, COLORS
 from sys import stderr as STDERR
 
 
@@ -32,7 +32,7 @@ def selector(prompt, choices):
             if len(buffer):
                 terminal.write(prompt + " " + buffer, True, True)
             else:
-                terminal.write(prompt + " (Start typing to search)", True, True)
+                terminal.write(prompt + COLORS.BBLACK + " (Start typing to search)" + COLORS.END, True, True)
 
             terminal.write("\n")
             lines_written += 1
@@ -57,7 +57,7 @@ def selector(prompt, choices):
 
                 m=f"  {choice}"
                 if lines_written-1 == selected:
-                    m=f"> {choice}"
+                    m=f"{COLORS.BOLD}{COLORS.BBLUE}>{COLORS.END} {choice}"
                 terminal.write(m, True, True, True)
                 lines_written += 1
 
