@@ -111,8 +111,12 @@ def main():
     prompt = sys.argv[1]
     options = sys.argv[2:]
 
-    print(selector(prompt, options))
 
+    result = selector(prompt, options)
+    if not result: return 1
+
+    print(result)
+    return 0
 
 if __name__ == '__main__':
     main()
