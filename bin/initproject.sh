@@ -1,9 +1,7 @@
 #!/bin/bash
 
 # `selector` needs to catch SIGTERM
-fwdsigterm() {
-    kill -TERM "$1" 2> /dev/null
-}
+fwdsigterm() { kill -TERM "$1" 2> /dev/null }
 
 LANGUAGES=(
     Python
