@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import os
 
 HERE = os.path.abspath(os.path.dirname(__file__))
-PACKAGE_NAME = 'pyutil'
+PACKAGE_NAME = 'hbutil'
 VERSION = '0.1'
 URL = 'https://github.com/wilfred-kun/HB'
 
@@ -22,7 +22,7 @@ setup(name=PACKAGE_NAME,
       python_requires='>=3.6',
       entry_points={'console_scripts':
             [
-                'selector = pyutil.selector:main'
+                'selector = hbutil.selector:main'
             ]
         }
     )

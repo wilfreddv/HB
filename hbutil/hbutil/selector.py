@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
-from pyutil import grep
-from pyutil.termctl import Terminal, CTLSEQ, COLORS
+from hbutil import grep
+from hbutil.termctl import Terminal, CTLSEQ, COLORS
 from sys import stderr as STDERR
 
 
