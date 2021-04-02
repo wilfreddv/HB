@@ -31,4 +31,4 @@ test: $(TARGET_LIB)
 	./test
 
 clean:
-	rm -rf build/ *.so
+	rm -rf build/ *.so test
