@@ -65,7 +65,7 @@ if [ "C" = $language ]; then
     mkdir include
     makefile="
 CC     = gcc
-INCLUDE+=include/*
+INCLUDE+=include
 SOURCE +=src/*
 FLAGS  = -Wall -Werror -Wunused -g
 TARGET = $name
