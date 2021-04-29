@@ -58,3 +58,31 @@ cp $SHARE/HB/licenses/$license LICENSE
 mkdir src && cd src
 
 cp $SHARE/HB/mainfiles/$language "$name.${EXTENSIONS[$language]}"
+
+cd ..
+
+if [ "C" = $language ]; then
+    mkdir include
+    makefile="
+CC     = gcc
+INCLUDE+=include/*
+SOURCE +=src/*
+FLAGS  = -Wall -Werror -Wunused -g
+TARGET = $name
+
+
+.DEFAULT: all
+
+.PHONY: all
+all: \$(TARGET)
+
+
+\$(TARGET): \$(SOURCE)
+\t\$(CC) \$(FLAGS) -o \$@ \$^ -I\$(INCLUDE)
+
+
+.PHONY: clean
+clean:
+\trm -rf \$(TARGET)"
+printf "$makefile" > Makefile
+fi
