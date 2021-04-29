@@ -1,7 +1,7 @@
 BINS=$(wildcard bin/*)
 SUBDIRS=hbutil
 
-.PHONY: all install uninstall
+.PHONY: all install uninstall reinstall
 .DEFAULT: all
 all:
 
@@ -18,3 +18,5 @@ uninstall: $(SUBDIRS)
 	
 	rm -rf ~/.local/share/HB
 	cd ~/.local; rm -f $(BINS)
+
+reinstall: uninstall install
