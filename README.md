@@ -2,7 +2,7 @@
 
 ## Installation
 ```
-$ https://github.com/wilfred-kun/HB.git
+$ https://github.com/wilfreddv/HB.git
 $ cd HB
 $ make install
 ```
