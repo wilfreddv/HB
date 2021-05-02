@@ -65,9 +65,10 @@ if [ "C" = $language ]; then
     mkdir include
     makefile="
 CC     = gcc
-INCLUDE+=include
-SOURCE +=src/*
-FLAGS  = -Wall -Werror -Wunused -g
+INCLUDE= include
+SOURCE = \$(wildcard src/*.c)
+OBJS   = \$(SOURCE:src/%%.c=build/%%.o)
+C_FLAGS= -c -Wall -Werror -Wunused -g -I\$(INCLUDE)
 TARGET = $name
 
 
@@ -77,12 +78,21 @@ TARGET = $name
 all: \$(TARGET)
 
 
-\$(TARGET): \$(SOURCE)
-\t\$(CC) \$(FLAGS) -o \$@ \$^ -I\$(INCLUDE)
+\$(TARGET): \$(OBJS)
+\t\$(CC) -o \$@ \$^
+
+
+build:
+\t@mkdir -p build
+
+
+build/%%.o: src/%%.c | build
+\t\$(CC) \$(C_FLAGS) \$< -o \$@
 
 
 .PHONY: clean
 clean:
-\trm -rf \$(TARGET)"
+\t-rm \$(TARGET)
+\t-rm \$(OBJS)"
 printf "$makefile" > Makefile
 fi
