@@ -63,7 +63,7 @@ cd ..
 
 if [ "C" = $language ]; then
     mkdir include
-    makefile="
+    makefile="\
 CC     = gcc
 INCLUDE= include
 SOURCE = \$(wildcard src/*.c)
@@ -92,7 +92,7 @@ build/%%.o: src/%%.c | build
 
 .PHONY: clean
 clean:
-\t-rm \$(TARGET)
-\t-rm \$(OBJS)"
+\t\$(RM) \$(TARGET)
+\t\$(RM) \$(OBJS)"
 printf "$makefile" > Makefile
 fi
