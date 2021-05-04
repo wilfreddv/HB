@@ -52,7 +52,7 @@ echo "Licence: $license"
 # Create it!
 echo
 mkdir $name && cd $name
-[[ -n "$has_git" ]] && git init && touch .gitignore
+[[ -n "$has_git" ]] && git init && cp $SHARE/HB/gitignore/$language ".gitignore"
 touch README.md
 cp $SHARE/HB/licenses/$license LICENSE
 mkdir src && cd src
