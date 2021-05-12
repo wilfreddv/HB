@@ -69,6 +69,7 @@ INCLUDE= include
 SOURCE = \$(wildcard src/*.c)
 OBJS   = \$(SOURCE:src/%%.c=build/%%.o)
 C_FLAGS= -c -Wall -Werror -Wunused -g -I\$(INCLUDE)
+L_FLAS =
 TARGET = $name
 
 
@@ -79,7 +80,7 @@ all: \$(TARGET)
 
 
 \$(TARGET): \$(OBJS)
-\t\$(CC) -o \$@ \$^
+\t\$(CC) \$(L_FLAGS) -o \$@ \$^
 
 
 build:
