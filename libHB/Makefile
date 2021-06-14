@@ -1,34 +1,26 @@
-CC=gcc
-SRCS=$(wildcard src/*.c)
-INCLUDES=$(wildcard include/*.h)
-OBJS=$(SRCS:src/%.c=build/%.o)
-CFLAGS=-c -Wall -Werror -pedantic -fPIC -O2 -g
-LFLAGS=-shared
+# Make File Template
 
-TARGET_LIB=libHB.so
+CXX = g++
+CXX_FLAGS = -g -Wall
 
+INCL_DIR =
+LIB_DIR =
+LD_FLAGS = ${LIB_DIR}
 
-.PHONY: install uninstall clean test
-.DEFAULT: $(TARGET_LIB) 
+CXX_FILES = #Use Wildcard If required
+HEADERS =
+OBJ_FILES = $(CXX_FILES:.cpp=.o)
+TARGET = main
 
+all: run
 
-$(TARGET_LIB): $(OBJS)
-	$(CC) $(LFLAGS) -o $@ $^
+${TARGET}: ${OBJ_FILES}
+	${CXX} -o $@ $^ ${LD_FLAGS}
 
+run: ${TARGET}
+	./${TARGET}
 
-build/%.o: src/*.c
-	@mkdir -p build
-	$(CC) $(CFLAGS) $< -o $@
-
-
-install:
-
-uninstall:
+clean: ${TARGET} ${OBJ_FILES}
+	rm $^
 
 
-test: $(TARGET_LIB)
-	$(CC) -L`pwd` -Wl,-rpath=`pwd` -Isrc/include/ test.c -o test -lHB
-	./test
-
-clean:
-	rm -rf build/ *.so test
