@@ -34,6 +34,7 @@ language=$(selector "Enter a language:" ${LANGUAGES[*]})
 SHARE=$(realpath $SHARE)
 if [[ -d "$SHARE/HB/licenses" ]] ; then
     LICENSES=`for entry in $SHARE/HB/licenses/*; do echo ${entry##*/}; done`
+    LICENSES+=("None")
     license=$(selector "Select a license:" ${LICENSES[*]})
 else
     echo "License folder not found."
@@ -45,7 +46,7 @@ echo
 echo "Name: $name"
 echo "Language: $language"
 echo -n "Git: "; [[ -n "$has_git" ]] && echo "Yes"  || echo "No"
-echo "Licence: $license"
+echo "License: $license"
 [[ "$(read -e -p 'Create project? [Y/n]: '; echo $REPLY)" == [Nn]* ]] && echo "Aborting..." && exit 0
 
 
@@ -54,7 +55,7 @@ echo
 mkdir $name && cd $name
 [[ -n "$has_git" ]] && git init && cp $SHARE/HB/gitignore/$language ".gitignore"
 touch README.md
-cp $SHARE/HB/licenses/$license LICENSE
+[[ "None" == "$license" ]] || cp $SHARE/HB/licenses/$license LICENSE
 mkdir src && cd src
 
 cp $SHARE/HB/mainfiles/$language "$name.${EXTENSIONS[$language]}"
