@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Name selection
+name=$1
 while [[ -z $name ]] ; do
     read -e -p "Enter a name: " name
 done
